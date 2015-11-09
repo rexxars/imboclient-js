@@ -666,10 +666,17 @@ describe('Imbo.ImageUrl', function() {
             assertUrlContains(url.flipVertically().getUrl(), 'http://imbo/users/pub/images/61da9892205a0d5077a353eb3487e8c8?t[]=flipVertically');
         });
 
+        it('should generate the correct access token when it contains special characters', function() {
+            assert.equal(
+                url.setQueryString('name=' + encodeURIComponent('båt.jpg')).flipVertically().getUrl(),
+                'http://imbo/users/pub/images/61da9892205a0d5077a353eb3487e8c8?name=b%C3%A5t.jpg&t%5B%5D=flipVertically&accessToken=b86bb2c6b90e37dda86721e0a20f292c125dda489538b4519eaaaddcb083c785'
+            );
+        });
+
         it('should generate correct URL-encoded URLs for advanced combinations', function() {
             assert.equal(
                 url.flipVertically().maxSize({ width: 123, height: 456 }).border({ color: '#bf1942' }).getUrl(),
-                'http://imbo/users/pub/images/61da9892205a0d5077a353eb3487e8c8?t%5B%5D=flipVertically&t%5B%5D=maxSize%3Awidth%3D123%2Cheight%3D456&t%5B%5D=border%3Acolor%3Dbf1942%2Cwidth%3D1%2Cheight%3D1%2Cmode%3Doutbound&accessToken=9258d52a05c40a6ca82e69a435a510855506caf565845f2c7bed863e2bb3f25b'
+                'http://imbo/users/pub/images/61da9892205a0d5077a353eb3487e8c8?t%5B%5D=flipVertically&t%5B%5D=maxSize%3Awidth%3D123%2Cheight%3D456&t%5B%5D=border%3Acolor%3Dbf1942%2Cwidth%3D1%2Cheight%3D1%2Cmode%3Doutbound&accessToken=56b863a63bdfe29ff80a2272f6f7208bbc2c778f8263071814f533e0d3b8f894'
             );
         });
 
